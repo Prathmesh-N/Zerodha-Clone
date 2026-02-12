@@ -21,10 +21,28 @@ const COOKIE_NAME = process.env.COOKIE_NAME || "token";
 
 const app = express();
 
+const DEFAULT_CORS_ORIGINS = [
+  "https://zerodha-clone-c2zu.onrender.com",
+  "https://zerodha-clone-dashboard-1ytk.onrender.com",
+  "http://localhost:3000",
+  "http://localhost:3001",
+];
+
+const ENV_CORS_ORIGINS = (process.env.CORS_ORIGIN || "")
+  .split(",")
+  .map((o) => o.trim())
+  .filter(Boolean);
+
+const ALLOWED_ORIGINS = [...new Set([...DEFAULT_CORS_ORIGINS, ...ENV_CORS_ORIGINS])];
+
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN
-    ? process.env.CORS_ORIGIN.split(",").map((o) => o.trim())
-    : true,
+  origin(origin, callback) {
+    if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+      callback(null, true);
+      return;
+    }
+    callback(new Error("Not allowed by CORS"));
+  },
   credentials: true,
 };
 
