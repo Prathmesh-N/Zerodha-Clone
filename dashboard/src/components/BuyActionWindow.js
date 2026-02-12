@@ -8,7 +8,11 @@ import GeneralContext from "./GeneralContext";
 import "./BuyActionWindow.css";
 import { useState } from "react";
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+const API_BASE_URL =
+  process.env.REACT_APP_API_URL ||
+  (process.env.NODE_ENV === "production"
+    ? "https://zerodha-clone-backend-ay9h.onrender.com"
+    : "http://localhost:5000");
 
 const BuyActionWindow = ({ uid }) => {
   const generalContext = useContext(GeneralContext);

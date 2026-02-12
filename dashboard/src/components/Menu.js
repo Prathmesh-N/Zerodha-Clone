@@ -2,9 +2,16 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+const API_BASE_URL =
+  process.env.REACT_APP_API_URL ||
+  (process.env.NODE_ENV === "production"
+    ? "https://zerodha-clone-backend-ay9h.onrender.com"
+    : "http://localhost:5000");
 const LANDING_URL =
-  process.env.REACT_APP_LANDING_URL || "http://localhost:3000";
+  process.env.REACT_APP_LANDING_URL ||
+  (process.env.NODE_ENV === "production"
+    ? "https://zerodha-clone-c2zu.onrender.com"
+    : "http://localhost:3000");
 
 const Menu = ({ user }) => {
   const [selectedMenu, setSelectMenu] = useState(0);
