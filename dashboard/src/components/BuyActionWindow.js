@@ -8,6 +8,8 @@ import GeneralContext from "./GeneralContext";
 import "./BuyActionWindow.css";
 import { useState } from "react";
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
 const BuyActionWindow = ({ uid }) => {
   const generalContext = useContext(GeneralContext);
 
@@ -15,7 +17,7 @@ const BuyActionWindow = ({ uid }) => {
   const [stockPrice, setStockPrice] = useState(0.0);
 
   const handleBuyClick = () => {
-    axios.post("http://localhost:5000/newOrder", {
+    axios.post(`${API_BASE_URL}/newOrder`, {
       name: uid,
       qty: stockQuantity,
       price: stockPrice,

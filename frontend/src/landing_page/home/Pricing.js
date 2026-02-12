@@ -13,18 +13,18 @@ function Pricing() {
                 <div className='col-6 mb-5'>
                     <div className='row text-center'>
                         <div className='col p-3 border'>
-                            <h1 className='mb-3'>â‚¹0</h1>
+                            <h1 className='mb-3'>₹0</h1>
                             <p>Free equity delivery and <br/>direct mutual funds</p>
                         </div>
                         <div className='col p-3 border'>
-                            <h1 className='mb-3'>â‚¹20</h1>
+                            <h1 className='mb-3'>₹20</h1>
                             <p> Intraday and F&O</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-     );
+    );
 }
 
 export default Pricing;
