@@ -5,12 +5,15 @@ import { ToastContainer, toast } from "react-toastify";
 import "./Signup.css";
 
 const DASHBOARD_URL =
-  process.env.REACT_APP_DASHBOARD_URL || "http://localhost:3001";
+  process.env.REACT_APP_DASHBOARD_URL ||
+  (process.env.NODE_ENV === "production"
+    ? "https://zerodha-clone-dashboard-1ytk.onrender.com"
+    : "http://localhost:3001");
 const API_BASE_URL =
-  process.env.REACT_APP_API_URL &&
-  !process.env.REACT_APP_API_URL.includes("localhost:3000")
-    ? process.env.REACT_APP_API_URL
-    : "http://localhost:5000";
+  process.env.REACT_APP_API_URL ||
+  (process.env.NODE_ENV === "production"
+    ? "https://zerodha-clone-backend-ay9h.onrender.com"
+    : "http://localhost:5000");
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -79,6 +82,7 @@ const Signup = () => {
             name="email"
             value={email}
             placeholder="Enter your email"
+            autoComplete="email"
             onChange={handleOnChange}
           />
         </div>
@@ -89,6 +93,7 @@ const Signup = () => {
             name="username"
             value={username}
             placeholder="Enter your username"
+            autoComplete="username"
             onChange={handleOnChange}
           />
         </div>
@@ -99,6 +104,7 @@ const Signup = () => {
             name="password"
             value={password}
             placeholder="Enter your password"
+            autoComplete="new-password"
             onChange={handleOnChange}
           />
         </div>

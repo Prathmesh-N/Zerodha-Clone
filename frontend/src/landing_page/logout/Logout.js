@@ -4,10 +4,10 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
 const API_BASE_URL =
-  process.env.REACT_APP_API_URL &&
-  !process.env.REACT_APP_API_URL.includes("localhost:3000")
-    ? process.env.REACT_APP_API_URL
-    : "http://localhost:5000";
+  process.env.REACT_APP_API_URL ||
+  (process.env.NODE_ENV === "production"
+    ? "https://zerodha-clone-backend-ay9h.onrender.com"
+    : "http://localhost:5000");
 
 const Logout = () => {
   const navigate = useNavigate();

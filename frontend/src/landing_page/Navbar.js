@@ -5,7 +5,10 @@ function Navbar() {
   const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const DASHBOARD_URL =
-    process.env.REACT_APP_DASHBOARD_URL || "http://localhost:3001";
+    process.env.REACT_APP_DASHBOARD_URL ||
+    (process.env.NODE_ENV === "production"
+      ? "https://zerodha-clone-dashboard-1ytk.onrender.com"
+      : "http://localhost:3001");
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
