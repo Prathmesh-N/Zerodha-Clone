@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "./Signup.css";
@@ -16,12 +16,12 @@ const API_BASE_URL =
     : "http://localhost:5000");
 
 const Signup = () => {
-  const navigate = useNavigate();
   const [inputValue, setInputValue] = useState({
     email: "",
     password: "",
     username: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { email, password, username } = inputValue;
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -42,6 +42,9 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
     try {
       const { data } = await axios.post(
         `${API_BASE_URL}/signup`,
@@ -54,21 +57,17 @@ const Signup = () => {
       if (success) {
         handleSuccess(message);
         localStorage.setItem("isLoggedIn", "true");
-        setTimeout(() => {
-          window.location.assign(DASHBOARD_URL);
-        }, 1000);
+        window.location.assign(DASHBOARD_URL);
       } else {
         handleError(message);
       }
     } catch (error) {
-      console.log(error);
+      handleError(
+        error?.response?.data?.message || "Signup failed. Please try again."
+      );
+    } finally {
+      setIsSubmitting(false);
     }
-    setInputValue({
-      ...inputValue,
-      email: "",
-      password: "",
-      username: "",
-    });
   };
 
   return (
@@ -108,7 +107,9 @@ const Signup = () => {
             onChange={handleOnChange}
           />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Signing up..." : "Submit"}
+        </button>
         <span>
           Already have an account? <Link to={"/login"}>Login</Link>
         </span>

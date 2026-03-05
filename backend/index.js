@@ -253,9 +253,19 @@ app.post("/newOrder", async (req, res) => {
   res.send("Order saved!");
 });
 
-app.listen(PORT, () => {
-  console.log("App started!");
-  mongoose.connect(uri);
-  console.log("DB started!");
-});
+const startServer = async () => {
+  try {
+    await mongoose.connect(uri);
+    console.log("DB started!");
+
+    app.listen(PORT, () => {
+      console.log(`App started on port ${PORT}!`);
+    });
+  } catch (error) {
+    console.error("Failed to connect to DB:", error);
+    process.exit(1);
+  }
+};
+
+startServer();
 
